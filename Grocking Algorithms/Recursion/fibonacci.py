@@ -6,4 +6,4 @@ def fibonacci(n):
 
 
 print(fibonacci(10))  # 55
-# This is a great example of 2 branch recursion
+# This is a great example of 2 branch Recursion
