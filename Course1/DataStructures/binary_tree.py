@@ -25,10 +25,22 @@ class BinaryTree:
 
         return self
 
+    def binary_search(self, val, root):
+        if not root:
+            return False
+
+        if val < root.val:
+            return self.binary_search(val, root.left)
+        elif val > root.val:
+            return self.binary_search(val, root.right)
+        else:
+            return True
+
 
 root = Node(4, Node(2), Node(5))
 tree = BinaryTree(root)
 tree.insert(6)
 
+print(tree.binary_search(6, root))  # True
 print(tree.root.right.right.val)
 
