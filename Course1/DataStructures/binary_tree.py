@@ -10,17 +10,16 @@ class BinaryTree:
         self.root = root
 
     def insert(self, val, root):
-        if val < root.val:
-            if not root.left:
-                root.left = Node(val)
-            else:
-                self.insert(val, root.left)
+        if not root:
+            return Node(val)
 
-        elif val > root.val:
-            if not root.right:
-                root.right = Node(val)
-            else:
-                self.insert(val, root.right)
+        elif val < root.val:
+            root.left = self.insert(val, root.left)
+        else:
+            root.right = self.insert(val, root.right)
+
+        return root
+
 
     def binary_search(self, val, root):
         if not root:
