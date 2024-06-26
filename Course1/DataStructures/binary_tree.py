@@ -9,21 +9,18 @@ class BinaryTree:
     def __init__(self, root):
         self.root = root
 
-    def insert(self, val):
-        cur = self.root
+    def insert(self, val, root):
+        if val < root.val:
+            if not root.left:
+                root.left = Node(val)
+            else:
+                self.insert(val, root.left)
 
-        while cur.left or cur.right:
-            if val < cur.val:
-                cur = cur.left
-            elif val > cur.val:
-                cur = cur.right
-
-        if val < cur.val:
-            cur.left = Node(val)
-        else:
-            cur.right = Node(val)
-
-        return self
+        elif val > root.val:
+            if not root.right:
+                root.right = Node(val)
+            else:
+                self.insert(val, root.right)
 
     def binary_search(self, val, root):
         if not root:
@@ -39,7 +36,7 @@ class BinaryTree:
 
 root = Node(4, Node(2), Node(5))
 tree = BinaryTree(root)
-tree.insert(6)
+tree.insert(6, root)
 
 print(tree.binary_search(6, root))  # True
 print(tree.root.right.right.val)
