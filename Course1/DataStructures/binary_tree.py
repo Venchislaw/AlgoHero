@@ -5,68 +5,83 @@ class Node:
         self.right = right
 
 
-class BinaryTree:
+class Tree:
     def __init__(self, root):
         self.root = root
+
+    def search(self, val, root):
+        if not root:
+            return False
+        else:
+            if val < root.val:
+                return self.search(val, root.left)
+            elif val > root.val:
+                return self.search(val, root.right)
+            else:
+                return True
 
     def insert(self, val, root):
         if not root:
             return Node(val)
-
-        elif val < root.val:
-            root.left = self.insert(val, root.left)
         else:
-            root.right = self.insert(val, root.right)
+            if val < root.val:
+                root.left = self.insert(val, root.left)
+            elif val > root.val:
+                root.right = self.insert(val, root.right)
 
         return root
 
-    def min_value_node(self, root):
-        cur = root
+    def min_node(self, root):
+        curr = root
 
-        while cur.left:
-            cur = cur.left
-        return cur
+        while curr.left:
+            curr = curr.left
+        return curr
 
-    def binary_search(self, val, root):
-        if not root:
-            return False
-
-        if val < root.val:
-            return self.binary_search(val, root.left)
-        elif val > root.val:
-            return self.binary_search(val, root.right)
-        else:
-            return True
-
-    def remove_node(self, val, root):
-        # In case we didn't find node
+    def remove(self, val, root):
         if not root:
             return None
 
-        elif val < root.val:
-            root.left = self.remove_node(val, root.left)
-        elif val > root.val:
-            root.right = self.remove_node(val, root.right)
-        # In case we found
         else:
-            # Main removal logic:
-            if not root.left:
-                return root.right
-
-            elif not root.right:
-                return root.left
-
+            if val < root.val:
+                root.left = self.remove(val, root.left)
+            elif val > root.val:
+                root.right = self.remove(val, root.right)
             else:
-                min_node = self.min_value_node(root.right)
-                root.val = min_node.val
+                if not root.right:
+                    return root.left
+                elif not root.left:
+                    return root.right
+                else:
+                    min_node = self.min_node(root.right)
+                    root.val = min_node.val
 
-                self.remove_node(min_node.val, root.right)
+                    root.right = self.remove(min_node.val, root.right)
+
+        return root
 
 
+root = Node(3)
+tree = Tree(root)
 
-root = Node(4, Node(2), Node(5))
-tree = BinaryTree(root)
+for i in range(100):
+    tree.insert(i, root)
+
+print(tree.search(86, root))
+print(tree.root.right.right.right.right.val)
+
+tree.remove(1, root)
+print(tree.search(1, root))
+
+root = Node(5)
+tree = Tree(root)
+tree.insert(2, root)
+tree.insert(1, root)
+tree.insert(3, root)
+tree.insert(7, root)
+tree.insert(8, root)
 tree.insert(6, root)
 
-tree.remove_node(6, root)
-print(tree.binary_search(6, root))
+tree.remove(7, root)
+
+print(tree.search(7, root))
