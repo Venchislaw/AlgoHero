@@ -60,6 +60,30 @@ class Tree:
 
         return root
 
+    def inorder_traverse(self, root):
+        if not root:
+            return None
+
+        self.inorder_traverse(root.left)
+        print(root.val)
+        self.inorder_traverse(root.right)
+
+    def preorder_traverse(self, root):
+        if not root:
+            return None
+
+        print(root.val)
+        self.inorder_traverse(root.left)
+        self.inorder_traverse(root.right)
+
+    def postorder_traverse(self, root):
+        if not root:
+            return None
+
+        self.inorder_traverse(root.left)
+        self.inorder_traverse(root.right)
+        print(root.val)
+
 
 root = Node(3)
 tree = Tree(root)
@@ -85,3 +109,9 @@ tree.insert(6, root)
 tree.remove(7, root)
 
 print(tree.search(7, root))
+
+tree.inorder_traverse(root)
+print("----------")
+tree.preorder_traverse(root)
+print("----------")
+tree.postorder_traverse(root)
