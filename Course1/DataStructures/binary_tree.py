@@ -90,7 +90,7 @@ tree = Tree(root)
 
 for i in range(100):
     tree.insert(i, root)
-
+"""
 print(tree.search(86, root))
 print(tree.root.right.right.right.right.val)
 
@@ -115,3 +115,4 @@ print("----------")
 tree.preorder_traverse(root)
 print("----------")
 tree.postorder_traverse(root)
+"""
