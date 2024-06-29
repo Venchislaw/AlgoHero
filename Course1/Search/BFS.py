@@ -1,5 +1,5 @@
 from collections import deque
-from Course1.DataStructures.binary_tree import Tree, root
+from Course1.DataStructures.binary_tree import tree
 
 
 def breadth_first_search(root):
@@ -19,9 +19,5 @@ def breadth_first_search(root):
         print("-" * 60)
         level += 1
 
-
-tree = Tree(root)
-for i in range(10):
-    tree.insert(i, root)
 
 breadth_first_search(tree.root)
