@@ -84,12 +84,40 @@ class Tree:
         self.inorder_traverse(root.right)
         print(root.val)
 
+    def tree_maze(self, leaf_val, root):
+        if not root or root.val == 0:
+            return False
+        elif root.val == leaf_val:
+            return True
+
+        self.tree_maze(leaf_val, root.left)
+        self.tree_maze(leaf_val, root.right)
+
+        return False
+
+    def can_reach_leaf(self, root):
+        if not root or root.val == 0:
+            return False
+
+        if not root.left and not root.right:
+            return True
+        if self.can_reach_leaf(root.left):
+            return True
+        elif self.can_reach_leaf(root.right):
+            return True
+
+        return False
+
 
 root = Node(3)
 tree = Tree(root)
 
 for i in range(100):
     tree.insert(i, root)
+
+tree.insert(-2, root)
+print(tree.tree_maze(-2, root))
+print(tree.can_reach_leaf(root))
 """
 print(tree.search(86, root))
 print(tree.root.right.right.right.right.val)
