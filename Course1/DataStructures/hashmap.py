@@ -1,34 +1,32 @@
-# building hashmap from scratch!
-
 class Pair:
     def __init__(self, key, val):
         self.key = key
         self.val = val
 
 
-class Hashmap:
+class HashMap:
     def __init__(self, capacity=2):
         self.capacity = capacity
+        self.size = 0
         self.map = [None] * self.capacity
-        self.size = 0  # size variable will count filled nodes
-        # while capacity counts all nodes
 
     def hash(self, key):
-        hashed = 0
-        for char in key:
-            hashed += ord(char)
+        result = 0
 
-        return hashed % self.capacity
+        for char in key:
+            result += ord(char)
+
+        return result % self.capacity
 
     def insert(self, key, val):
         i = self.hash(key)
 
         while True:
-            if self.map[i] == None:
+            if self.map[i] is None:
                 self.map[i] = Pair(key, val)
                 self.size += 1
 
-                if self.size == self.capacity // 2:
+                if self.size >= self.capacity // 2:
                     self.rehash()
                 return
 
@@ -43,17 +41,19 @@ class Hashmap:
         i = self.hash(key)
 
         while self.map[i] is not None:
+            if self.map[i].key == key:
+                return self.map[i].val
             i += 1
             i = i % self.capacity
 
-        return self.map[i]
+        return None
 
     def rehash(self):
         self.capacity *= 2
         new_map = [None] * self.capacity
+
         old_map = self.map
         self.map = new_map
-        self.size = 0
 
         for pair in old_map:
             if pair:
@@ -64,11 +64,26 @@ class Hashmap:
             if pair:
                 print([pair.key, pair.val])
 
+    def remove(self, key):
+        if not self.get(key):
+            return
 
-hash_map = Hashmap()
+        i = self.hash(key)
+        while True:
+            if self.map[i].key == key:
+                self.map[i] = None
+                self.size -= 1
+                return
+            i += 1
+            i = i % self.capacity
+
+
+hash_map = HashMap()
 hash_map.insert("Hello", "World")
 hash_map.insert("F", "Society")
 hash_map.insert("WD", "F?")
 hash_map.insert("WD", "F")
 
+
+hash_map.remove("Hello")
 hash_map.print()
