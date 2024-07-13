@@ -54,7 +54,7 @@ class HashMap:
 
         old_map = self.map
         self.map = new_map
-
+        self.size = 0
         for pair in old_map:
             if pair:
                 self.insert(pair.key, pair.val)
