@@ -1,49 +1,39 @@
-def merge_sort(array, start, end):
-    if end - start + 1 <= 1:
-        return array
-
-    mid = (start + end) // 2
-
-    merge_sort(array, start, mid)
-    merge_sort(array, mid + 1, end)
-
-    merge(array, start, mid, end)
-
-    return array
-
-
-def merge(array, start, mid, end):
-    L = array[start: mid + 1]
-    R = array[mid + 1: end + 1]
-
-    l_idx = 0
-    r_idx = 0
-    # array index
-    i = start
-
-    while l_idx < len(L) and r_idx < len(R):
-        # changing original array in-place
-        # thankfully we saved Left and Right
-        if L[l_idx] <= R[r_idx]:
-            array[i] = L[l_idx]
-            l_idx += 1
-        else:
-            array[i] = R[r_idx]
-            r_idx += 1
-        i += 1
-
-    # add remaining elements
-    # one half will have
-    while l_idx < len(L):
-        array[i] = L[l_idx]
-        l_idx += 1
-        i += 1
-
-    while r_idx < len(R):
-        array[i] = R[r_idx]
-        r_idx += 1
-        i += 1
-
-
-# [4, 2, 1, 8] --> [1, 2, 4, 8]
-print(merge_sort([4, 2, 1, 8], 0, 3))
+def merge_sort(arr):
+    if len(arr) > 1:
+        left_half = arr[:len(arr) // 2]
+        right_half = arr[len(arr) // 2:]
+        
+        merge_sort(left_half)
+        merge_sort(right_half)
+        
+        # here we start merging
+        
+        leftmost_l = 0  # index for left half
+        leftmost_r = 0  # index for right half
+        i = 0  # curr arr elem index
+        
+        while leftmost_l < len(left_half) and leftmost_r < len(right_half):
+            if left_half[leftmost_l] < right_half[leftmost_r]:
+                arr[i] = left_half[leftmost_l]
+                leftmost_l += 1
+            else:
+                arr[i] = right_half[leftmost_r]
+                leftmost_r += 1
+            
+            i += 1
+            
+        # we will always have some residuals
+        while leftmost_l < len(left_half):
+            arr[i] = left_half[leftmost_l]
+            leftmost_l += 1
+            i += 1
+            
+        while leftmost_r < len(right_half):
+            arr[i] = right_half[leftmost_r]
+            leftmost_r += 1
+            i += 1
+            
+    return arr
+    
+    
+print(merge_sort([3, 2, 0, 1, 3, 4, 6]))
