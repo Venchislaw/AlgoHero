@@ -125,3 +125,80 @@ def bucket_sort(arr):
     return arr
 
 print("bucket sort: ", bucket_sort([2, 1, 4, 5, 7]))
+
+
+# we're done with sorting, searching and stuff...
+# Now it's time for the real deal... DataStructures
+
+
+# Dynamic Arrays:
+print(f"{'-'*60}\n DATA STRUCTURES \n {'-'*60}")
+dynamic_arr = ["It's", "Too", "Easy"]
+print("Dynamic Array: ", dynamic_arr)
+
+# HashSet/Hashmap:
+
+# built-in:
+
+set_ = set(["Hello", "mom!"])
+print("built-in set: ", set_)
+
+hash_map = {"Hello": "Mom", "I'm on": "MTV!"}
+print("built-in hashmap: ", hash_map)
+
+# from scratch:
+
+class HashSet:
+    def __init__(self, capacity=2) -> None:
+        self.set = [None] * capacity
+        self.capacity = capacity
+        self.size = 0
+
+    def hash(self, val) -> int:
+        key = val % self.capacity
+        return key
+    
+    def add(self, val) -> None:
+        key = self.hash(val)
+
+        if self.set[key]:
+            self.set[key] = val
+        else:
+            self.set[key] = val
+            self.size += 1
+            
+            if self.size >= len(self.set) * 0.5:
+                self.rehash()
+
+
+    def includes(self, val) -> bool:
+        key = self.hash(val)
+        return self.set[key] is not None
+
+
+    def remove(self, val) -> None:
+        if self.includes(val):
+            key = self.hash(val)
+            self.set[key] = None
+        
+
+    def rehash(self) -> None:
+        old_set = self.set
+        self.capacity *= 2
+        self.size = 0
+        self.set = [None] * self.capacity
+
+        for val in old_set:
+            if val:
+                self.add(val)
+
+print("Hashset from scratch test: ")
+hashset = HashSet()
+hashset.add(2)
+hashset.add(3)
+hashset.add(5)
+hashset.remove(2)
+print(hashset.set)
+print(hashset.includes(3))
+print(hashset.includes(4))
+print("Hashset tests are over")
