@@ -202,3 +202,91 @@ print(hashset.set)
 print(hashset.includes(3))
 print(hashset.includes(4))
 print("Hashset tests are over")
+
+
+print("Hashmap From Scratch: ")
+
+
+class Pair:
+    def __init__(self, key, val) -> None:
+        self.key = key
+        self.val = val
+
+
+class Hashmap:
+    def __init__(self, capacity=2) -> None:
+        self.capacity = capacity
+        self.map = [None] * capacity
+        self.size = 0
+
+    def hash(self, key) -> int:
+        return key % self.capacity
+
+    def add(self, key, val) -> None:
+        index = self.hash(key)
+
+        while True:
+            if self.map[index] is None:
+                self.map[index] = Pair(key, val)
+                self.size += 1
+
+                if self.size >= self.capacity * 0.5:
+                    self.rehash()
+                return
+            
+            elif self.map[index].key == key:
+                self.map[index].val = val
+                return
+            
+            index += 1
+            index = index % self.capacity
+
+    def get(self, key):
+        index = self.hash(key)
+
+        while True:
+            if self.map[index] is None:
+                return None
+            
+            elif self.map[index].key == key:
+                return self.map[index].val
+            
+            index += 1
+            index = index % self.capacity
+
+    def remove(self, key) -> None:
+        if not self.get(key):
+            return None
+        
+        index = self.hash(key)
+
+        while True:
+            if self.map[index].key == key:
+                self.map[index] = None
+                self.size -= 1
+                return
+            
+            index += 1
+            index = index % self.capacity
+
+    def rehash(self) -> None:
+        old_map = self.map
+        self.capacity *= 2
+        self.size = 0
+
+        self.map = [None] * self.capacity
+
+        for pair in old_map:
+            if pair:
+                self.add(pair.key, pair.val)
+
+
+hmap = Hashmap()
+hmap.add(1, 2)
+hmap.add(2, 3)
+print(hmap.map)
+print(hmap.get(1))
+print(hmap.get(0))
+hmap.remove(1)
+print(hmap.map)
+print(hmap.get(1))
