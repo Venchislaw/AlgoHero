@@ -290,3 +290,42 @@ print(hmap.get(0))
 hmap.remove(1)
 print(hmap.map)
 print(hmap.get(1))
+
+print("End of HashMap from scratch")
+
+
+# Linked Lists
+
+
+class Node:
+    def __init__(self, val, next=None) -> None:
+        self.val = val
+        self.next = next
+
+
+class LinkedList:
+    def __init__(self, root: Node) -> None:
+        self.root = root
+
+    def add(self, val):
+        cur = self.root
+        
+        while cur.next:
+            cur = cur.next
+        
+        cur.next = Node(val, None)
+
+    def print(self):
+        cur = self.root
+
+        while cur:
+            print(cur.val)
+            cur = cur.next
+
+print("Linked List experiments:")
+ll = LinkedList(Node(1))
+ll.add(2)
+ll.add(3)
+
+ll.print()
+print("Linked List experiments are over")
