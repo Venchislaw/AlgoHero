@@ -365,4 +365,73 @@ print("Linked List experiments are over")
 
 # T R E E S
 
+print(f"Binary Search Trees!!!")
 
+class TreeNode:
+    def __init__(self, val, left=None, right=None) -> None:
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Tree:
+    def __init__(self, root: TreeNode) -> None:
+        self.root = root
+    
+    def add(self, root: TreeNode, val) -> None:
+        if not root:
+            return TreeNode(val)
+        
+        if val > root.val:
+            root.right = self.add(root.right, val)
+        elif val < root.val:
+            root.left = self.add(root.left, val)
+        
+        return root
+    
+    # dfs inorder traverse
+    def traverse(self, root: TreeNode) -> None:
+        if not root:
+            return
+        
+        self.traverse(root.left)
+        print(root.val)
+        self.traverse(root.right)
+
+    def min_node(self, root):
+        cur = root
+        while cur.left:
+            cur = cur.left
+        return cur
+
+    def remove(self, root, val):
+        if not root:
+            return None
+        
+        if val > root.val:
+            root.right = self.remove(root.right, val)
+        elif val < root.val:
+            root.left = self.remove(root.left, val)
+        
+        else:
+            if not root.right:
+                return root.left
+            elif not root.left:
+                return root.right
+            else:
+                min_node = self.min_node(root.right)
+                root.val = min_node.val
+
+                root.right = self.remove(root.right, min_node.val)
+        
+        return root
+
+
+root = TreeNode(3)
+tree = Tree(root)
+tree.add(root, 2)
+tree.add(root, 1)
+tree.add(root, 5)
+tree.add(root, 4)
+tree.remove(root, 4)
+tree.traverse(root)
