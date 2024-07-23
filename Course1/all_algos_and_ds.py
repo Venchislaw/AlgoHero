@@ -304,11 +304,11 @@ class Node:
 
 
 class LinkedList:
-    def __init__(self, root: Node) -> None:
-        self.root = root
+    def __init__(self, head: Node) -> None:
+        self.head = head
 
     def add(self, val):
-        cur = self.root
+        cur = self.head
         
         while cur.next:
             cur = cur.next
@@ -316,10 +316,26 @@ class LinkedList:
         cur.next = Node(val, None)
 
     def print(self):
-        cur = self.root
+        cur = self.head
 
         while cur:
             print(cur.val)
+            cur = cur.next
+
+    def remove(self, val):
+        if self.head.val == val:
+            self.head = self.head.next
+            return
+        
+        cur = self.head.next
+        cur_prev = self.head
+
+        while cur:
+            if cur.val == val:
+                cur_prev.next = cur.next
+                return
+            
+            cur_prev = cur
             cur = cur.next
 
 print("Linked List experiments:")
@@ -328,4 +344,25 @@ ll.add(2)
 ll.add(3)
 
 ll.print()
+
+print("_--------------")
+
+ll.remove(3)
+ll.add(5)
+ll.print()
+print("-----")
+ll.remove(1)
+ll.print()
+print("-----")
+ll.remove(2)
+ll.print()
+
+# Umom!
+
 print("Linked List experiments are over")
+
+
+
+# T R E E S
+
+
