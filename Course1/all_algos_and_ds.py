@@ -378,17 +378,6 @@ class Tree:
     def __init__(self, root: TreeNode) -> None:
         self.root = root
     
-    def add(self, root: TreeNode, val) -> None:
-        if not root:
-            return TreeNode(val)
-        
-        if val > root.val:
-            root.right = self.add(root.right, val)
-        elif val < root.val:
-            root.left = self.add(root.left, val)
-        
-        return root
-    
     # dfs inorder traverse
     def traverse(self, root: TreeNode) -> None:
         if not root:
@@ -398,40 +387,55 @@ class Tree:
         print(root.val)
         self.traverse(root.right)
 
+    def add(self, val, root):
+        if not root:
+            return TreeNode(val)
+        
+        if val > root.val:
+            root.right = self.add(val, root.right)
+        elif val < root.val:
+            root.left = self.add(val, root.left)
+        
+        return root
+    
     def min_node(self, root):
         cur = root
+
         while cur.left:
             cur = cur.left
+        
         return cur
 
-    def remove(self, root, val):
+    def remove(self, val, root):
         if not root:
             return None
         
+        # search part
+
         if val > root.val:
-            root.right = self.remove(root.right, val)
+            root.right = self.remove(val, root.right)
         elif val < root.val:
-            root.left = self.remove(root.left, val)
-        
+            root.left = self.remove(val, root.left)
+        # remove part
         else:
-            if not root.right:
-                return root.left
-            elif not root.left:
+            if not root.left:
                 return root.right
+            elif not root.right:
+                return root.left
             else:
                 min_node = self.min_node(root.right)
                 root.val = min_node.val
-
-                root.right = self.remove(root.right, min_node.val)
-        
+                root.right = self.remove(min_node.val, root.right)
         return root
-
+        
 
 root = TreeNode(3)
 tree = Tree(root)
-tree.add(root, 2)
-tree.add(root, 1)
-tree.add(root, 5)
-tree.add(root, 4)
-tree.remove(root, 4)
+tree.add(2, root)
+tree.add(6, root)
+tree.add(4, root)
+tree.add(5, root)
+tree.traverse(root)
+print('-'*60)
+tree.remove(4, root)
 tree.traverse(root)
