@@ -492,3 +492,28 @@ print(heap.pop())
 print(heap.heap)
 print(heap.pop())
 print(heap.heap)
+
+
+def heapify(arr):
+    heap = [0] + arr
+
+    i = (len(heap)-1) // 2
+
+    while i > 0:
+        j = i
+        while j * 2 < len(heap):
+            if (j * 2 + 1 < len(heap)
+                and heap[j * 2 + 1] < heap[j * 2]
+                and heap[j * 2 + 1] < heap[j]):
+                heap[j], heap[j * 2 + 1] = heap[j * 2 + 1], heap[j]
+                j = j * 2 + 1
+            elif (heap[j * 2] < heap[j]):
+                heap[j], heap[j * 2] = heap[j * 2], heap[j]
+                j = j * 2
+            else:
+                break
+        i -= 1
+    return heap
+
+
+print(heapify([2, 3, 1, 5]))
