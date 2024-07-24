@@ -1,3 +1,6 @@
+from collections import deque
+
+
 # oke. Let's start with search
 # it's only one algo
 
@@ -517,3 +520,29 @@ def heapify(arr):
 
 
 print(heapify([2, 3, 1, 5]))
+
+print("End of Experiments with Heaps")
+
+print("Bst algorithm for tree")
+
+# BST
+
+root = tree.root
+
+def BST(root, target):
+    queue = deque()
+    queue.append(root)
+
+    while len(queue) > 0:
+        elem = queue.popleft()
+
+        if elem.val == target:
+            return elem
+        
+        if elem.left:
+            queue.append(elem.left)
+        if elem.right:
+            queue.append(elem.right)
+        
+
+print(BST(root, 3))
