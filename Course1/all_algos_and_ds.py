@@ -546,3 +546,65 @@ def BST(root, target):
         
 
 print(BST(root, 3))
+
+
+def inorder_traverse(root):
+    if not root:
+        return None
+    inorder_traverse(root.left)
+    print(root.val)
+    inorder_traverse(root.right)
+
+
+def preorder_traverse(root):
+    if not root:
+        return None
+    
+    print(root.val)
+    preorder_traverse(root.left)
+    preorder_traverse(root.right)
+
+
+def post_order_traverse(root):
+    if not root:
+        return None
+    
+    post_order_traverse(root.left)
+    post_order_traverse(root.right)
+    print(root.val)
+
+
+# We finish with Graph Dfs!
+
+
+def dfs_graph(matrix, row=0, col=0, visited=set()):
+    res = 0
+
+    if (min(row, col) < 0
+        or row >= len(matrix)
+        or col >= len(matrix[0])
+        or matrix[row][col] == 1
+        or (row, col) in visited):
+        return 0
+    
+    elif row == len(matrix) - 1 and col == len(matrix[0]) - 1:
+        return 1
+
+    visited.add((row, col))
+
+    res += dfs_graph(matrix, row-1, col, visited)
+    res += dfs_graph(matrix, row+1, col, visited)
+    res += dfs_graph(matrix, row, col-1, visited)
+    res += dfs_graph(matrix, row, col+1, visited)
+
+    visited.remove((row, col))
+
+    return res
+
+
+grid = [[0, 0, 0, 0],
+        [1, 1, 0, 0],
+        [0, 0, 0, 1],
+        [0, 1, 0, 0]]
+
+print(dfs_graph(grid))
