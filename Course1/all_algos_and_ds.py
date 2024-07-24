@@ -393,30 +393,27 @@ class Tree:
         
         if val > root.val:
             root.right = self.add(val, root.right)
-        elif val < root.val:
+        else:
             root.left = self.add(val, root.left)
-        
         return root
     
     def min_node(self, root):
         cur = root
-
         while cur.left:
             cur = cur.left
-        
         return cur
 
     def remove(self, val, root):
+        # search for value
         if not root:
             return None
         
-        # search part
-
         if val > root.val:
             root.right = self.remove(val, root.right)
         elif val < root.val:
             root.left = self.remove(val, root.left)
-        # remove part
+        # in case we found value
+        # remove
         else:
             if not root.left:
                 return root.right
@@ -427,6 +424,7 @@ class Tree:
                 root.val = min_node.val
                 root.right = self.remove(min_node.val, root.right)
         return root
+
         
 
 root = TreeNode(3)
@@ -439,3 +437,58 @@ tree.traverse(root)
 print('-'*60)
 tree.remove(4, root)
 tree.traverse(root)
+print("End of Bst experiments")
+# end of Bst stuff
+
+
+# Heaps start here!
+
+
+class Heap:
+    def __init__(self):
+        self.heap = [0]
+
+    def add(self, val):
+        self.heap.append(val)
+        i = len(self.heap) - 1
+
+        while self.heap[i // 2] > val:
+            self.heap[i], self.heap[i // 2] = self.heap[i // 2], self.heap[i]
+            i = i // 2
+        
+        return self.heap
+
+    def pop(self):
+        popped = self.heap[1]
+        i = 1
+        self.heap[i] = self.heap.pop()
+
+        while i * 2 < len(self.heap):
+            if (i * 2 + 1 < len(self.heap)
+                and self.heap[i * 2 + 1] < self.heap[i * 2]
+                and self.heap[i] > self.heap[i * 2 + 1]):
+                
+                self.heap[i], self.heap[i * 2 + 1] = self.heap[i * 2 + 1], self.heap[i]
+                i = i * 2 + 1
+
+            elif self.heap[i * 2] < self.heap[i]:
+                self.heap[i], self.heap[i * 2] = self.heap[i * 2], self.heap[i]
+                i = i * 2
+            else:
+                break
+
+        return popped
+
+
+heap = Heap()
+heap.add(2)
+heap.add(3)
+heap.add(1)
+heap.add(5)
+
+print(heap.heap)
+
+print(heap.pop())
+print(heap.heap)
+print(heap.pop())
+print(heap.heap)
