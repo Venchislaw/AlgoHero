@@ -35,6 +35,15 @@ class LinkedList:
             return head
         else:
             return self.search(head.next, target)
+
+    def remove(self, head, val):
+        if not head:
+            return None
+        elif head.val == val:
+            return head.next
+        else:
+            head.next = self.remove(head.next, val)
+        return head
         
         
 
@@ -82,6 +91,16 @@ class LinkedList:
             return head
         else:
             return self.search(head.next, target)
+
+
+    def remove(self, head, val):
+        if not head:
+            return None
+        elif head.val == val:
+            return head.next
+        else:
+            head.next = self.remove(head.next, val)
+        return head
         
         
 
