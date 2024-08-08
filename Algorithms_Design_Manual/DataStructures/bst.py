@@ -50,8 +50,37 @@ class BST:
             self.print_out(root.left)
             print(root.val)
             self.print_out(root.right)
+            
+    def min_node(self, root):
+        while root.left:
+            root = root.left
+        return root
         
-
+    def max_node(self, root):
+        while root.right:
+            root = root.right
+        return root
+            
+    def remove(self, root, val):
+        if not root:
+            return None
+        
+        if val < root.val:
+            root.left = self.remove(root.left, val)
+        elif val > root.val:
+            root.right = self.remove(root.right, val)
+        else:
+            if not root.left:
+                return root.right
+            elif not root.right:
+                return root.left
+            else:
+                min_r_node = self.min_node(root.right)
+                self.val = min_r_node.val
+                self.remove(root.right, min_r_node)
+                
+        return root    
+    
 root = TreeNode(2)
 
 tree = BST(root)
@@ -59,3 +88,5 @@ tree.insert(1)
 tree.insert(3)
 tree.print_out(root)
 print(root.left.parent is root)  # True
+tree.remove(root, 1)
+tree.print_out(root)
