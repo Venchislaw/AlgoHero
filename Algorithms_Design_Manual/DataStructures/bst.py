@@ -67,8 +67,12 @@ class BST:
         
         if val < root.val:
             root.left = self.remove(root.left, val)
+            if root.left:
+                root.left.parent = root
         elif val > root.val:
             root.right = self.remove(root.right, val)
+            if root.right:
+                root.right.parent = root
         else:
             if not root.left:
                 return root.right
@@ -81,12 +85,14 @@ class BST:
                 
         return root    
     
-root = TreeNode(2)
+root = TreeNode(3)
 
 tree = BST(root)
+tree.insert(2)
 tree.insert(1)
-tree.insert(3)
+tree.insert(4)
 tree.print_out(root)
 print(root.left.parent is root)  # True
-tree.remove(root, 1)
+tree.remove(root, 2)
 tree.print_out(root)
+print(root.left.parent is root)  # True
