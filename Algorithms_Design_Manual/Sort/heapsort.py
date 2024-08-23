@@ -48,9 +48,8 @@ def make_heap(arr):
 
 def heap_sort(arr):
     heap = make_heap(arr)
-    res = []
-    while len(heap) > 0:
-        res.append(heap.pop())
-    return res
+    for i in range(len(arr)):
+        arr[i] = heap.pop()
+    return arr
 
 print(heap_sort([5, 4, 8, 1, 2]))
