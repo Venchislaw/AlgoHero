@@ -44,10 +44,43 @@ def make_heap(arr):
     for item in arr:
         heap.insert(item)
     return heap
+    
+
+def heapify(arr):
+    arr = [0] + arr
+    n = len(arr) // 2
+    
+    while n > 0:
+        i = n
+        
+        while i * 2 < len(arr):
+            left = i * 2
+            right = left + 1
+            
+            if right < len(arr) and arr[right] < arr[left] and arr[right] < arr[i]:
+                arr[i], arr[right] = arr[right], arr[i]
+                i = right
+
+            elif arr[left] < arr[i]:
+                arr[i], arr[left] = arr[left], arr[i]
+                i = left
+            else:
+                break
+        
+        n -= 1
+    
+    heap = Heap()
+    heap.heap = arr
+    return heap
+            
+            
+
+# print(heapify([5, 4, 6, 2, 1]))
 
 
 def heap_sort(arr):
-    heap = make_heap(arr)
+    heap = heapify(arr)
+    print(heap.heap)
     for i in range(len(arr)):
         arr[i] = heap.pop()
     return arr
