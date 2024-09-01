@@ -47,6 +47,7 @@ qckunion.union(4, 9)
 print(qckunion.connected(0, 6))  # expected: True; output: True
 print(qckunion.roots)  # [5, 2, 2, 4, 9, 5, 5, 2, 3, 9]
 
+print(qckunion.root(4))  # 9
 
 # However even this implementation is not good enough
 # As our tree can be skinny and imbalanced, so connected() operation will take O(n)
