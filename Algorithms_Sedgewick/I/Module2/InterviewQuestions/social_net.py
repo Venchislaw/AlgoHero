@@ -50,7 +50,18 @@ class WeightedQuickUnion:
         return self.root(p) == self.root(q)
 
 
-"""
-I'll imlpement it TOMORROW... Study year starts brah...
-Anyway, the rest is tomorrow
-"""
+with open("InterviewQuestions/time_stamps.txt") as f:
+    connected = False
+    qu = WeightedQuickUnion(5)
+    for line in f.readlines():
+        line = line.replace("\n", "")
+        time, p, q = line.split()
+        qu.union(int(p), int(q))
+        if len(set(qu.roots)) == 1:
+            print(time)
+            connected = True
+            break
+    
+if not connected:
+    print("Users didn't connect")
+    print(qu.roots)
