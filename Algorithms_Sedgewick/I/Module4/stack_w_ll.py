@@ -16,6 +16,9 @@ class Stack(LinkedListBasis):
     def pop(self):
         self.delete(self.head.val)
 
+    def is_empty(self):
+        return self.head is not None
+
 """
 head = Node(0)
 stack = Stack(head)
