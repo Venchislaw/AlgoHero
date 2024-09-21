@@ -1,45 +1,41 @@
-# Bomj Merge Sort Implementation
-
 def merge_sort(arr):
-    mid = len(arr) // 2
-
     if len(arr) == 1:
         return arr
+    
+    mid = len(arr) // 2
+    left_subarray = merge_sort(arr[:mid])
+    right_subarray = merge_sort(arr[mid:])
 
-    if len(arr) >=2:
-        left_half = merge_sort(arr[:mid])
-        right_half = merge_sort(arr[mid:])
+    return merge(left_subarray, right_subarray)
 
-    output = [None] * len(arr)
-
-    i = 0
-    j = 0
+def merge(left_arr, right_arr):
+    l = 0
+    r = 0
     k = 0
 
-    while i < len(left_half) and j < len(right_half):
-        if left_half[i] < right_half[j]:
-            output[k] = left_half[i]
-            i += 1
-
+    new_arr = [None] * (len(left_arr) + len(right_arr))
+    while l < len(left_arr) and r < len(right_arr):
+        if left_arr[l] < right_arr[r]:
+            new_arr[k] = left_arr[l]
+            l += 1
+        
         else:
-            output[k] = right_half[j]
-            j += 1
+            new_arr[k] = right_arr[r]
+            r += 1
         
         k += 1
     
-    while i < len(left_half):
-        output[k] = left_half[i]
-        i += 1
+    while l < len(left_arr):
+        new_arr[k] = left_arr[l]
+        l += 1
         k += 1
     
-    while j < len(right_half):
-        output[k] = right_half[j]
-        j += 1
+    while r < len(right_arr):
+        new_arr[k] = right_arr[r]
+        r += 1
         k += 1
-
-    return output
-
     
+    return new_arr
 
 
-print(merge_sort([1, 2, 3, 4]))
+print(merge_sort([3, 2, 5, 1]))
